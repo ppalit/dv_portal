@@ -1,107 +1,99 @@
 {
   "application": {
-    "components": {
-      "sql_database": {
-        "visible_name": "SQL Database",
-        "api_name": "sql_database",
-        "quantity": 1
-      },
-      "logic_app": {
-        "visible_name": "Logic App",
-        "api_name": "logic_app",
-        "quantity": 1
-      },
-      "function_app": {
-        "visible_name": "Function App",
-        "api_name": "function_app",
-        "quantity": 1
-      },
-      "storage_account": {
-        "visible_name": "Storage Account",
-        "api_name": "storage_account",
-        "quantity": 1
-      }
+    "sql_database": {
+      "visible_name": "SQL Database",
+      "api_name": "sql_database",
+      "quantity": 1
+    },
+    "logic_app": {
+      "visible_name": "Logic App",
+      "api_name": "logic_app",
+      "quantity": 1
+    },
+    "function_app": {
+      "visible_name": "Function App",
+      "api_name": "function_app",
+      "quantity": 1
+    },
+    "storage_account": {
+      "visible_name": "Storage Account",
+      "api_name": "storage_account",
+      "quantity": 1
     }
   },
   "data": {
-    "components": {
-      "databricks": {
-        "visible_name": "Databricks",
-        "api_name": "databricks",
-        "quantity": 1
-      },
-      "sql": {
-        "visible_name": "SQL",
-        "api_name": "sql",
-        "quantity": 1
-      },
-      "cosmos_db": {
-        "visible_name": "Cosmos DB",
-        "api_name": "cosmos_db",
-        "quantity": 1
-      },
-      "redis_cache": {
-        "visible_name": "Redis Cache",
-        "api_name": "redis_cache",
-        "quantity": 1
-      },
-      "key_vault": {
-        "visible_name": "Key Vault",
-        "api_name": "key_vault",
-        "quantity": 1
-      }
+    "databricks": {
+      "visible_name": "Databricks",
+      "api_name": "databricks",
+      "quantity": 1
+    },
+    "sql": {
+      "visible_name": "SQL",
+      "api_name": "sql",
+      "quantity": 1
+    },
+    "cosmos_db": {
+      "visible_name": "Cosmos DB",
+      "api_name": "cosmos_db",
+      "quantity": 1
+    },
+    "redis_cache": {
+      "visible_name": "Redis Cache",
+      "api_name": "redis_cache",
+      "quantity": 1
+    },
+    "key_vault": {
+      "visible_name": "Key Vault",
+      "api_name": "key_vault",
+      "quantity": 1
     }
   },
-  "ai": {
-    "components": {}
-  },
+  "ai": {},
   "alacarte": {
-    "components": {
-      "sql_database": {
-        "visible_name": "SQL Database",
-        "api_name": "sql_database",
-        "quantity": 1
-      },
-      "logic_app": {
-        "visible_name": "Logic App",
-        "api_name": "logic_app",
-        "quantity": 1
-      },
-      "function_app": {
-        "visible_name": "Function App",
-        "api_name": "function_app",
-        "quantity": 1
-      },
-      "storage_account": {
-        "visible_name": "Storage Account",
-        "api_name": "storage_account",
-        "quantity": 1
-      },
-      "databricks": {
-        "visible_name": "Databricks",
-        "api_name": "databricks",
-        "quantity": 1
-      },
-      "sql": {
-        "visible_name": "SQL",
-        "api_name": "sql",
-        "quantity": 1
-      },
-      "cosmos_db": {
-        "visible_name": "Cosmos DB",
-        "api_name": "cosmos_db",
-        "quantity": 1
-      },
-      "redis_cache": {
-        "visible_name": "Redis Cache",
-        "api_name": "redis_cache",
-        "quantity": 1
-      },
-      "key_vault": {
-        "visible_name": "Key Vault",
-        "api_name": "key_vault",
-        "quantity": 1
-      }
+    "sql_database": {
+      "visible_name": "SQL Database",
+      "api_name": "sql_database",
+      "quantity": 1
+    },
+    "logic_app": {
+      "visible_name": "Logic App",
+      "api_name": "logic_app",
+      "quantity": 1
+    },
+    "function_app": {
+      "visible_name": "Function App",
+      "api_name": "function_app",
+      "quantity": 1
+    },
+    "storage_account": {
+      "visible_name": "Storage Account",
+      "api_name": "storage_account",
+      "quantity": 1
+    },
+    "databricks": {
+      "visible_name": "Databricks",
+      "api_name": "databricks",
+      "quantity": 1
+    },
+    "sql": {
+      "visible_name": "SQL",
+      "api_name": "sql",
+      "quantity": 1
+    },
+    "cosmos_db": {
+      "visible_name": "Cosmos DB",
+      "api_name": "cosmos_db",
+      "quantity": 1
+    },
+    "redis_cache": {
+      "visible_name": "Redis Cache",
+      "api_name": "redis_cache",
+      "quantity": 1
+    },
+    "key_vault": {
+      "visible_name": "Key Vault",
+      "api_name": "key_vault",
+      "quantity": 1
     }
   }
 }
