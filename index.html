@@ -190,8 +190,8 @@
                 <div class="flex justify-center mb-4">
                      <svg class="w-16 h-16 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
-                <h3 class="text-2xl font-bold text-white">Submission Successful!</h3>
-                <p class="text-gray-300 mt-2">The configuration for <strong id="success-app-name" class="text-indigo-400"></strong> has been logged to the developer console.</p>
+                <h3 class="text-2xl font-bold text-white">Application Requested</h3>
+                <p class="text-gray-300 mt-2">The application <strong id="success-app-name" class="text-indigo-400"></strong> has been requested.</p>
                 <div id="success-components-list" class="text-gray-400 mt-4 text-sm"></div>
                 <div class="mt-8">
                     <button id="finish-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">Finish</button>
@@ -226,7 +226,6 @@
             const appNameInput = document.getElementById('app-name');
             const displayAppName = document.getElementById('display-app-name');
             const successAppName = document.getElementById('success-app-name');
-            const successZoneType = document.getElementById('success-zone-type');
             const successComponentsList = document.getElementById('success-components-list');
 
             // Landing Zone options
@@ -282,16 +281,19 @@
 
             const displaySuccess = () => {
                 successAppName.textContent = appData.name;
+
+                let componentHtml = '';
                 const zoneText = appData.landingZone.charAt(0).toUpperCase() + appData.landingZone.slice(1);
-                successZoneType.textContent = `${zoneText} Landing Zone`;
+                
+                componentHtml += `<p class="font-medium text-gray-200 mt-4">Template: ${zoneText} Landing Zone</p>`;
 
                 if (appData.components.length > 0) {
-                     successComponentsList.innerHTML = `<p class="font-medium text-gray-200 mt-3">With components:</p><ul class="list-none">${appData.components.map(c => `<li>${c}</li>`).join('')}</ul>`;
+                     componentHtml += `<p class="font-medium text-gray-200 mt-3">Requested Components:</p><ul class="list-none text-gray-400">${appData.components.map(c => `<li>- ${c}</li>`).join('')}</ul>`;
                 } else if (appData.landingZone === 'application' || appData.landingZone === 'data') {
-                    successComponentsList.innerHTML = '<p class="mt-3">With no additional components selected.</p>';
-                } else {
-                    successComponentsList.innerHTML = '';
+                    componentHtml += '<p class="mt-3">No additional components were selected.</p>';
                 }
+
+                successComponentsList.innerHTML = componentHtml;
                 showStep('step-success');
             };
 
