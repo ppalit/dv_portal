@@ -237,9 +237,10 @@
             // Collect selected components from the dynamic step
             const selectedToggles = document.querySelectorAll('#component-list .component-toggle:checked');
             
+            // To ensure clarity, we separate the component data for the UI and the final output.
             const selectedComponents = Array.from(selectedToggles).map(toggle => ({
-                visible_name: toggle.value,
-                api_name: toggle.dataset.apiName,
+                displayName: toggle.value,
+                technicalName: toggle.dataset.apiName,
             }));
             formData.components = selectedComponents;
 
@@ -258,7 +259,7 @@
                 ip_address: ipAddress,
                 app_name: formData.appName,
                 template: formData.landingZone,
-                components: formData.components.map(c => c.api_name).join(', ')
+                components: formData.components.map(c => c.technicalName).join(', ')
             };
 
             console.log("--- Application Request ---");
@@ -271,7 +272,7 @@
             if(formData.components.length > 0){
                 formData.components.forEach(component => {
                     const li = document.createElement('li');
-                    li.textContent = component.visible_name;
+                    li.textContent = component.displayName;
                     finalList.appendChild(li);
                 });
             } else {
