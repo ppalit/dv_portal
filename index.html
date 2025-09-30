@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Simple transition for modal */
+        .modal {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 flex items-center justify-center min-h-screen">
+
+    <!-- Main Content -->
+    <div id="main-content" class="text-center p-8">
+        <header class="mb-12">
+            <h1 class="text-5xl font-bold text-white mb-2">Developer Portal</h1>
+            <p class="text-lg text-gray-400">Your central hub for creating and managing applications.</p>
+        </header>
+        <main>
+            <button id="create-app-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg text-lg shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 transform hover:scale-105">
+                Create New App
+            </button>
+        </main>
+    </div>
+
+    <!-- Modal for App Creation -->
+    <div id="app-modal" class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 opacity-0 pointer-events-none transform scale-95">
+        <div id="modal-content" class="modal-content bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl p-8 transform scale-95">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modal-title" class="text-2xl font-bold text-white">Create a New Application</h2>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <!-- Step 1: App Name -->
+            <div id="step-1" class="step active">
+                <p class="text-gray-300 mb-4">Let's start with a name for your new application.</p>
+                <label for="app-name" class="block text-sm font-medium text-gray-300 mb-2">Application Name</label>
+                <input type="text" id="app-name" name="app-name" placeholder="e.g., phoenix-project" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+                <div class="flex justify-end mt-8">
+                    <button id="next-btn-step1" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Landing Zone -->
+            <div id="step-2" class="step">
+                <p class="text-gray-300 mb-6">Choose a landing zone template for <strong id="display-app-name" class="text-indigo-400"></strong>.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Option Cards -->
+                    <div class="landing-zone-option bg-gray-700 p-6 rounded-lg border-2 border-transparent hover:border-indigo-500 cursor-pointer transition-all" data-value="application">
+                        <h3 class="font-bold text-lg text-white">Application Landing Zone</h3>
+                        <p class="text-gray-400 text-sm mt-1">For standard web apps, APIs, and microservices.</p>
+                    </div>
+                    <div class="landing-zone-option bg-gray-700 p-6 rounded-lg border-2 border-transparent hover:border-indigo-500 cursor-pointer transition-all" data-value="data">
+                        <h3 class="font-bold text-lg text-white">Data Landing Zone</h3>
+                        <p class="text-gray-400 text-sm mt-1">For data pipelines, processing, and analytics.</p>
+                    </div>
+                    <div class="landing-zone-option bg-gray-700 p-6 rounded-lg border-2 border-transparent hover:border-indigo-500 cursor-pointer transition-all" data-value="ai">
+                        <h3 class="font-bold text-lg text-white">AI Landing Zone</h3>
+                        <p class="text-gray-400 text-sm mt-1">For machine learning models and AI services.</p>
+                    </div>
+                    <div class="landing-zone-option bg-gray-700 p-6 rounded-lg border-2 border-transparent hover:border-indigo-500 cursor-pointer transition-all" data-value="alacarte">
+                        <h3 class="font-bold text-lg text-white">Alacarte</h3>
+                        <p class="text-gray-400 text-sm mt-1">Select individual components and build your own.</p>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center mt-8">
+                    <button id="back-btn-step2" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors">Back</button>
+                    <button id="create-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed" disabled>Create</button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Success Message -->
+            <div id="step-3" class="step text-center py-8">
+                <div class="flex justify-center mb-4">
+                     <svg class="w-16 h-16 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-white">Application Created!</h3>
+                <p class="text-gray-300 mt-2">Your application <strong id="success-app-name" class="text-indigo-400"></strong> with a <strong id="success-zone-type" class="text-indigo-400"></strong> is being provisioned.</p>
+                <div class="mt-8">
+                    <button id="finish-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">Finish</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Modal elements
+            const modal = document.getElementById('app-modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            // Buttons
+            const createAppBtn = document.getElementById('create-app-btn');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const nextBtnStep1 = document.getElementById('next-btn-step1');
+            const backBtnStep2 = document.getElementById('back-btn-step2');
+            const createBtn = document.getElementById('create-btn');
+            const finishBtn = document.getElementById('finish-btn');
+            
+            // Steps
+            const steps = document.querySelectorAll('.step');
+            
+            // Inputs and display
+            const appNameInput = document.getElementById('app-name');
+            const displayAppName = document.getElementById('display-app-name');
+            const successAppName = document.getElementById('success-app-name');
+            const successZoneType = document.getElementById('success-zone-type');
+            
+            // Landing Zone options
+            const landingZoneOptions = document.querySelectorAll('.landing-zone-option');
+            
+            let currentStep = 1;
+            let appData = {
+                name: '',
+                landingZone: ''
+            };
+
+            // --- Utility Functions ---
+            const showStep = (stepNumber) => {
+                steps.forEach(step => step.classList.remove('active'));
+                const stepToShow = document.getElementById(`step-${stepNumber}`);
+                if (stepToShow) {
+                    stepToShow.classList.add('active');
+                }
+                currentStep = stepNumber;
+            };
+
+            const openModal = () => {
+                modal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                modal.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+                resetForm();
+            };
+            
+            const closeModal = () => {
+                modal.classList.add('opacity-0', 'scale-95');
+                modal.classList.remove('opacity-100', 'scale-100');
+                modalContent.classList.add('scale-95');
+                modalContent.classList.remove('scale-100');
+                setTimeout(() => {
+                    modal.classList.add('pointer-events-none');
+                }, 300); // Wait for transition to finish
+            };
+            
+            const resetForm = () => {
+                appData = { name: '', landingZone: '' };
+                appNameInput.value = '';
+                nextBtnStep1.disabled = true;
+                createBtn.disabled = true;
+                landingZoneOptions.forEach(opt => opt.classList.remove('border-indigo-500', 'bg-indigo-900/50'));
+                showStep(1);
+            };
+
+
+            // --- Event Listeners ---
+            createAppBtn.addEventListener('click', openModal);
+            closeModalBtn.addEventListener('click', closeModal);
+            finishBtn.addEventListener('click', closeModal);
+
+            // Close modal on outside click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Step 1: App Name validation
+            appNameInput.addEventListener('input', () => {
+                if (appNameInput.value.trim().length > 0) {
+                    nextBtnStep1.disabled = false;
+                } else {
+                    nextBtnStep1.disabled = true;
+                }
+            });
+            
+            // Step 1 -> Step 2
+            nextBtnStep1.addEventListener('click', () => {
+                appData.name = appNameInput.value.trim();
+                displayAppName.textContent = appData.name;
+                showStep(2);
+            });
+            
+            // Step 2 -> Step 1
+            backBtnStep2.addEventListener('click', () => {
+                showStep(1);
+            });
+            
+            // Step 2: Landing Zone Selection
+            landingZoneOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    landingZoneOptions.forEach(opt => opt.classList.remove('border-indigo-500', 'bg-indigo-900/50'));
+                    option.classList.add('border-indigo-500', 'bg-indigo-900/50');
+                    appData.landingZone = option.dataset.value;
+                    createBtn.disabled = false;
+                });
+            });
+            
+            // Step 2 -> Step 3 (Creation)
+            createBtn.addEventListener('click', () => {
+                if (!appData.name || !appData.landingZone) return;
+                
+                // Display success message
+                successAppName.textContent = appData.name;
+                successZoneType.textContent = appData.landingZone + " landing zone";
+                console.log('Creating app:', appData);
+                showStep(3);
+            });
+        });
+    </script>
+
+</body>
+</html>
