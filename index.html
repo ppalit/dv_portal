@@ -28,6 +28,13 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .loader {
+            border-top-color: #3498db;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100 flex items-center justify-center min-h-screen">
@@ -51,7 +58,7 @@
             <div class="flex justify-between items-center mb-6">
                 <h2 id="modal-title" class="text-2xl font-bold text-white">Create a New Application</h2>
                 <button id="close-modal-btn" class="text-gray-400 hover:text-white transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
 
@@ -128,11 +135,11 @@
                 </div>
                 <div class="flex justify-between items-center mt-8">
                     <button id="back-btn-step3" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors">Back</button>
-                    <button id="create-btn-step3" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">Create</button>
+                    <button id="next-btn-step3" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">Next</button>
                 </div>
             </div>
 
-            <!-- Step 4 (was 3): Data Landing Zone Options -->
+            <!-- Step 4: Data Landing Zone Options -->
             <div id="step-4" class="step">
                 <p class="text-gray-300 mb-6">Select the components for your Data Landing Zone.</p>
                 <div class="space-y-4">
@@ -174,17 +181,49 @@
                 </div>
                 <div class="flex justify-between items-center mt-8">
                     <button id="back-btn-step4" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors">Back</button>
-                    <button id="create-btn-step4" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">Create</button>
+                    <button id="next-btn-step4" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 5: GitHub Audit Details -->
+            <div id="step-5" class="step">
+                <p class="text-gray-300 mb-2">Enter the repository details to save the audit trail.</p>
+                 <p class="text-xs text-amber-400 mb-4 bg-amber-900/30 p-2 rounded-md">Warning: Your Personal Access Token will be used for a single API request and not stored. Ensure it has the `repo` scope to write to the file.</p>
+                <div class="space-y-4">
+                    <div>
+                         <label for="github-owner" class="block text-sm font-medium text-gray-300 mb-2">GitHub Owner / Organization</label>
+                         <input type="text" id="github-owner" placeholder="e.g., my-org" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+                    </div>
+                     <div>
+                         <label for="github-repo" class="block text-sm font-medium text-gray-300 mb-2">Repository Name</label>
+                         <input type="text" id="github-repo" placeholder="e.g., project-audits" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+                    </div>
+                     <div>
+                        <label for="github-path" class="block text-sm font-medium text-gray-300 mb-2">Full Path to Audit File</label>
+                        <input type="text" id="github-path" placeholder="e.g., audits/log.md" value="audits/portal-log.md" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+                   </div>
+                     <div>
+                         <label for="github-pat" class="block text-sm font-medium text-gray-300 mb-2">Personal Access Token (PAT)</label>
+                         <input type="password" id="github-pat" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+                    </div>
+                    <div id="api-error-message" class="text-red-400 text-sm hidden"></div>
+                </div>
+                <div class="flex justify-between items-center mt-8">
+                    <button id="back-btn-step5" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors">Back</button>
+                    <button id="write-audit-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition-colors w-48 flex items-center justify-center">
+                        <span class="btn-text">Save to Audit Trail</span>
+                        <div class="loader w-5 h-5 border-2 rounded-full hidden"></div>
+                    </button>
                 </div>
             </div>
             
-            <!-- Step 5: Success Message -->
+            <!-- Step Success: Success Message -->
             <div id="step-success" class="step text-center py-8">
                 <div class="flex justify-center mb-4">
                      <svg class="w-16 h-16 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
-                <h3 class="text-2xl font-bold text-white">Application Created!</h3>
-                <p class="text-gray-300 mt-2">Your application <strong id="success-app-name" class="text-indigo-400"></strong> with a <strong id="success-zone-type" class="text-indigo-400"></strong> is being provisioned.</p>
+                <h3 class="text-2xl font-bold text-white">Audit Trail Updated!</h3>
+                <p class="text-gray-300 mt-2">A record for <strong id="success-app-name" class="text-indigo-400"></strong> has been written to the audit file in your repository.</p>
                 <div id="success-components-list" class="text-gray-400 mt-4 text-sm"></div>
                 <div class="mt-8">
                     <button id="finish-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">Finish</button>
@@ -207,9 +246,11 @@
             const backBtnStep2 = document.getElementById('back-btn-step2');
             const nextOrCreateBtn = document.getElementById('next-or-create-btn');
             const backBtnStep3 = document.getElementById('back-btn-step3');
-            const createBtnStep3 = document.getElementById('create-btn-step3');
+            const nextBtnStep3 = document.getElementById('next-btn-step3');
             const backBtnStep4 = document.getElementById('back-btn-step4');
-            const createBtnStep4 = document.getElementById('create-btn-step4');
+            const nextBtnStep4 = document.getElementById('next-btn-step4');
+            const backBtnStep5 = document.getElementById('back-btn-step5');
+            const writeAuditBtn = document.getElementById('write-audit-btn');
             const finishBtn = document.getElementById('finish-btn');
             
             // Steps
@@ -218,6 +259,11 @@
             // Inputs and display
             const appNameInput = document.getElementById('app-name');
             const displayAppName = document.getElementById('display-app-name');
+            const githubOwnerInput = document.getElementById('github-owner');
+            const githubRepoInput = document.getElementById('github-repo');
+            const githubPathInput = document.getElementById('github-path');
+            const githubPatInput = document.getElementById('github-pat');
+            const apiErrorMessage = document.getElementById('api-error-message');
             const successAppName = document.getElementById('success-app-name');
             const successZoneType = document.getElementById('success-zone-type');
             const successComponentsList = document.getElementById('success-components-list');
@@ -231,6 +277,7 @@
                 name: '',
                 landingZone: '',
                 components: [],
+                lastComponentStep: 'step-2'
             };
 
             // --- Utility Functions ---
@@ -261,8 +308,14 @@
             };
             
             const resetForm = () => {
-                appData = { name: '', landingZone: '', components: [] };
+                appData = { name: '', landingZone: '', components: [], lastComponentStep: 'step-2' };
                 appNameInput.value = '';
+                githubOwnerInput.value = '';
+                githubRepoInput.value = '';
+                githubPathInput.value = 'audits/portal-log.md';
+                githubPatInput.value = '';
+                apiErrorMessage.classList.add('hidden');
+                apiErrorMessage.textContent = '';
                 nextBtnStep1.disabled = true;
                 nextOrCreateBtn.disabled = true;
                 nextOrCreateBtn.textContent = 'Create';
@@ -274,7 +327,7 @@
             };
 
             const displaySuccess = () => {
-                 successAppName.textContent = appData.name;
+                successAppName.textContent = appData.name;
                 const zoneText = appData.landingZone.charAt(0).toUpperCase() + appData.landingZone.slice(1);
                 successZoneType.textContent = `${zoneText} Landing Zone`;
 
@@ -285,8 +338,90 @@
                 } else {
                     successComponentsList.innerHTML = '';
                 }
-                console.log('Creating app:', appData);
                 showStep('step-success');
+            };
+            
+            const handleApiError = (message) => {
+                apiErrorMessage.textContent = `Error: ${message}`;
+                apiErrorMessage.classList.remove('hidden');
+            };
+
+            const writeAuditTrailToFile = async () => {
+                const owner = githubOwnerInput.value.trim();
+                const repo = githubRepoInput.value.trim();
+                const path = githubPathInput.value.trim();
+                const token = githubPatInput.value.trim();
+
+                apiErrorMessage.classList.add('hidden');
+
+                if (!owner || !repo || !path || !token) {
+                    handleApiError('Please fill in all GitHub details.');
+                    return;
+                }
+
+                const btnText = writeAuditBtn.querySelector('.btn-text');
+                const loader = writeAuditBtn.querySelector('.loader');
+                
+                writeAuditBtn.disabled = true;
+                btnText.classList.add('hidden');
+                loader.classList.remove('hidden');
+
+                const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+                const headers = {
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Authorization': `token ${token}`,
+                };
+
+                try {
+                    // 1. Get the file to get its current SHA and content
+                    let fileSha = null;
+                    let currentContent = '';
+                    const getFileResponse = await fetch(apiUrl, { headers });
+
+                    if (getFileResponse.ok) {
+                        const fileData = await getFileResponse.json();
+                        fileSha = fileData.sha;
+                        currentContent = atob(fileData.content); // Decode from base64
+                    } else if (getFileResponse.status !== 404) {
+                        throw new Error(`Could not fetch file. Status: ${getFileResponse.status}`);
+                    }
+
+                    // 2. Prepare the new content
+                    const timestamp = new Date().toISOString();
+                    const componentsString = appData.components.length > 0 ? appData.components.join(', ') : 'None';
+                    const newAuditLine = `${timestamp} | App: ${appData.name} | Zone: ${appData.landingZone} | Components: ${componentsString}`;
+                    const updatedContent = currentContent ? `${currentContent}\n${newAuditLine}` : newAuditLine;
+                    const encodedContent = btoa(updatedContent); // Re-encode to base64
+
+                    // 3. Create or update the file
+                    const bodyPayload = {
+                        message: `AUDIT: Add record for ${appData.name}`,
+                        content: encodedContent,
+                    };
+                    if (fileSha) {
+                        bodyPayload.sha = fileSha;
+                    }
+
+                    const updateFileResponse = await fetch(apiUrl, {
+                        method: 'PUT',
+                        headers,
+                        body: JSON.stringify(bodyPayload),
+                    });
+
+                    if (updateFileResponse.ok) {
+                        displaySuccess();
+                    } else {
+                        const errorData = await updateFileResponse.json();
+                        throw new Error(errorData.message || `Failed to write file. Status: ${updateFileResponse.status}`);
+                    }
+
+                } catch (error) {
+                    handleApiError(error.message);
+                } finally {
+                    writeAuditBtn.disabled = false;
+                    btnText.classList.remove('hidden');
+                    loader.classList.add('hidden');
+                }
             };
 
 
@@ -320,46 +455,52 @@
                         nextOrCreateBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
                         nextOrCreateBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
                     } else {
-                        nextOrCreateBtn.textContent = 'Create';
-                        nextOrCreateBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
-                        nextOrCreateBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+                        nextOrCreateBtn.textContent = 'Next'; // Change from 'Deploy' to 'Next' to go to audit step
+                        nextOrCreateBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                        nextOrCreateBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
                     }
                 });
             });
 
             nextOrCreateBtn.addEventListener('click', () => {
                 if (appData.landingZone === 'application') {
+                    appData.lastComponentStep = 'step-2';
                     showStep('step-3');
                 } else if (appData.landingZone === 'data') {
+                    appData.lastComponentStep = 'step-2';
                     showStep('step-4');
                 } else {
-                    displaySuccess();
+                    appData.components = [];
+                    appData.lastComponentStep = 'step-2';
+                    showStep('step-5');
                 }
             });
 
             // App LZ Listeners
             backBtnStep3.addEventListener('click', () => showStep('step-2'));
-            createBtnStep3.addEventListener('click', () => {
+            nextBtnStep3.addEventListener('click', () => {
                 appData.components = [];
                 appComponents.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        appData.components.push(checkbox.dataset.component);
-                    }
+                    if (checkbox.checked) appData.components.push(checkbox.dataset.component);
                 });
-                displaySuccess();
+                appData.lastComponentStep = 'step-3';
+                showStep('step-5');
             });
 
             // Data LZ Listeners
             backBtnStep4.addEventListener('click', () => showStep('step-2'));
-            createBtnStep4.addEventListener('click', () => {
+            nextBtnStep4.addEventListener('click', () => {
                 appData.components = [];
                 dataComponents.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        appData.components.push(checkbox.dataset.component);
-                    }
+                    if (checkbox.checked) appData.components.push(checkbox.dataset.component);
                 });
-                displaySuccess();
+                appData.lastComponentStep = 'step-4';
+                showStep('step-5');
             });
+
+            // GitHub Audit Listeners
+            backBtnStep5.addEventListener('click', () => showStep(appData.lastComponentStep));
+            writeAuditBtn.addEventListener('click', writeAuditTrailToFile);
         });
     </script>
 
