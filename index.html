@@ -225,6 +225,12 @@
                      }
                      populateComponents(formData.landingZone);
                 }
+            } else if (currentStep === 2) { // Step 3: Components
+                const selectedToggles = document.querySelectorAll('#component-list .component-toggle:checked');
+                formData.components = Array.from(selectedToggles).map(toggle => ({
+                    displayName: toggle.value,
+                    technicalName: toggle.dataset.apiName,
+                }));
             }
 
             steps[currentStep].classList.remove('form-step-active');
